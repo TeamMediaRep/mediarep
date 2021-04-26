@@ -34,7 +34,7 @@ function addButtonElement() {
     e.preventDefault();
     // testing!
     console.log(
-      "Heads up! Labeling like 'Gluten Free' has no real health benefit unless you're celiac!"
+      "Heads up! Labeling like 'Gluten Free' has no real health benefit unless you're celiac!!"
     );
   };
 }
