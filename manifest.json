@@ -5,17 +5,12 @@
   "description": "A nutritional claims checker while you shop for you favorite food brands. It will debunk any claims on the product to make your consuming health and safe products.",
   "content_scripts": [
     {
-      "matches": [
-        "https://www.target.com/*"
-      ],
-      "js": [
-        "content.js"
-      ]
+      "css": ["./content.css"],
+      "matches": ["https://www.target.com/*"],
+      "js": ["./content.js"]
     }
   ],
-  "permissions": [
-    "tabs"
-  ],
+  "permissions": ["tabs"],
   "browser_action": {
     "default_popup": "popup.html",
     "default_title": "Demo extention",
