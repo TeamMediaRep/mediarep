@@ -1,17 +1,17 @@
 .buttonn {
-  background-color: "green";
-  border: "solid 2px #dfdfdf";
-  position: "relative";
-  top: "12.5em";
-  left: "50em";
+  background-color: green !important;
+  border: solid 7px red !important;
+  /* position: relative;
+  top: 12.5em;
+  left: 50em;
   z-index: 8000;
-  background-color: "white";
-  width: "10%";
-  border-radius: "20px";
-  padding: "0.5em";
-  box-sizing: "border-box";
+  background-color: white;
+  width: 10%;
+  border-radius: 20px;
+  padding: 0.5em;
+  box-sizing: border-box; */
 }
 
 .testing {
-  background-color: "red";
+  background-color: red !important;
 }

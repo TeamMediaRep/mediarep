@@ -57,35 +57,44 @@ function addButtonElement() {
   const newButton = document.createElement("button");
   //give the button content
   newButton.textContent = "Click to Analyze";
-  newButton.className = "taurusButton";
+  newButton.className = "buttonn";
 
   //styling for button
   newButton.style.background = "linear-gradient(to bottom, #2c3e50, #3498db) ";
-  newButton.style.position = "relative";
-  newButton.style.top = "12.5em";
-  newButton.style.left = "50em";
-  newButton.style.zIndex = 8000;
+  // newButton.style.position = "relative";
+  // newButton.style.top = "12.5em";
+  // newButton.style.left = "50em";
+  // newButton.style.zIndex = 8000;
   newButton.style.color = "white";
-  newButton.style.width = "10%";
-  newButton.style.height = "30%";
-  newButton.style.borderRadius = "20px";
-  newButton.style.padding = "0.5em";
-  newButton.style.boxSizing = "border-box";
+  // newButton.style.width = "10%";
+  // newButton.style.height = "30%";
+  // newButton.style.borderRadius = "20px";
+  // newButton.style.padding = "0.5em";
+  // newButton.style.boxSizing = "border-box";
 
   //attach button to page
   const currentButton = document.getElementById("headerMain");
   document.body.insertAdjacentElement("afterbegin", newButton, currentButton);
 
-  // document.body.insertAdjacentElement("afterend", debunkModal, newButton);
+  const allDivs = document.getElementsByTagName("div");
+  const buttonContainerNode =
+    allDivs[0].firstChild.childNodes[3].childNodes[1].childNodes[1]
+      .childNodes[1].firstChild.firstChild.firstChild;
+  newButton.classList.add("buttonn");
+  // buttonContainerNode.insertAdjacentHTML("afterend", newButton);
+
+  console.log(buttonContainerNode);
+
+  const targetNode =
+    allDivs[0].firstChild.childNodes[3].childNodes[1].childNodes[1]
+      .childNodes[1].childNodes[1];
+  // targetNode.classList.add("testing");
+
+  // targetNode.append(newButton);
+  buttonContainerNode.appendChild(newButton);
 
   newButton.onclick = function (e) {
     e.preventDefault();
-
-    const allDivs = document.getElementsByTagName("div");
-    const targetNode =
-      allDivs[0].firstChild.childNodes[3].childNodes[1].childNodes[1]
-        .childNodes[1].childNodes[1];
-    targetNode.classList.add("testing");
 
     // create the debunking modal
     const debunkModal = document.createElement("div");
