@@ -6,11 +6,13 @@
   "content_scripts": [
     {
       "css": ["./content.css"],
-      "matches": ["https://www.target.com/*"],
-      "js": ["./content.js"]
+      "matches": ["*://www.target.com/*"]
     }
   ],
-  "permissions": ["tabs"],
+  "background": {
+    "scripts": ["background.js"]
+  },
+  "permissions": ["tabs", "webNavigation", "*://www.target.com/*"],
   "browser_action": {
     "default_popup": "popup.html",
     "default_title": "Demo extention",
