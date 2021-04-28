@@ -53,7 +53,7 @@ const displayText = displayTextOptions[firstKeyword];
 function addButtonElement() {
   //create a new div element
   const newButton = document.createElement("button");
-  newButton.textContent = "Click to Analyze";
+  newButton.textContent = "Evaluate Claims";
   newButton.className = "buttonn";
 
   //styling for button
@@ -83,12 +83,26 @@ function addButtonElement() {
   newButton.onclick = function (e) {
     e.preventDefault();
 
-    const targetNode =
-      allDivs[0].firstChild.childNodes[3].childNodes[1].childNodes[1]
-        .childNodes[1].childNodes[1];
+    // const targetNode =
+    //   allDivs[0].firstChild.childNodes[3].childNodes[1].childNodes[1]
+    //     .childNodes[1].childNodes[1];
+    const targetNode = document.getElementById("root");
     targetNode.classList.add("testing");
 
     // create the debunking modal
+    const modalContainer = document.createElement("div");
+    modalContainer.style.position = "fixed";
+    modalContainer.style.top = "0";
+    modalContainer.style.left = "0";
+    modalContainer.style.right = "0";
+    modalContainer.style.width = "100%";
+    modalContainer.style.height = "100%";
+    modalContainer.style.backgroundColor = "rgba(0, 0, 0, 0.5)";
+    modalContainer.style.opacity = "0";
+    modalContainer.style.visibility = "hidden";
+    modalContainer.style.transform = "scale(1.1)";
+    modalContainer.style.transition = "visibility 0s linear 0.25s, opacity 0.25s 0s, transform 0.25s";
+
     const debunkModal = document.createElement("div");
     debunkModal.innerHTML = `Misleading claim alert! <br/><br/>${displayText}<br/>`;
     debunkModal.style.background = "#fefefe";
@@ -97,11 +111,36 @@ function addButtonElement() {
     debunkModal.style.borderRadius = "2px";
     debunkModal.style.padding = "12px";
     debunkModal.style.height = "300px";
+    debunkModal.style.width = "24rem";
+
+    debunkModal.style.position = "absolute";
+    // debunkModal.style.top = "0";
+    debunkModal.style.top = "50%";
+    debunkModal.style.left = "50%";
+    debunkModal.style.transform = "translate(-50%, -50%)";
+
+
+    modalContainer.appendChild(debunkModal);
+
+    const closeButton = document.createElement("span");
+    closeButton.innerHTML = "&times;";
+    closeButton.style.float = "right";
+    closeButton.style.width = "1.5rem";
+    closeButton.style.lineHeight = "1.5rem";
+    closeButton.style.textAlign = "center";
+    closeButton.style.cursor = "pointer";
+    closeButton.style.borderRadius = "0.25rem";
+    closeButton.style.backgroundColor = "#fefefe";
+
+    debunkModal.prepend(closeButton);
+    function toggleModal() {
+      modalContainer.classList.toggle("button-showing-debunk");
+    }
 
     // logic here to link clicking with stuff happening
     if (newButton.classList.contains("button-showing-debunk")) {
       newButton.classList.remove("button-showing-debunk");
-      newButton.textContent = "Click to Analyze";
+      newButton.textContent = "Evaluate Claims";
       newButton.style.background = "#E4572E";
       const modalChild = targetNode.lastChild;
       targetNode.removeChild(modalChild);
@@ -110,7 +149,13 @@ function addButtonElement() {
       newButton.textContent = "Done";
       newButton.style.background = "black";
 
-      targetNode.appendChild(debunkModal);
+      // show modal styles
+      modalContainer.style.opacity = "1";
+      modalContainer.style.visibility = "visible";
+      modalContainer.style.transform = "scale(1.0)";
+      modalContainer.style.transition = "visibility 0s linear 0s, opacity 0.25s 0s, transform 0.25s";
+
+      targetNode.appendChild(modalContainer);
     }
   };
 }
