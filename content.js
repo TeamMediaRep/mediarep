@@ -77,9 +77,9 @@ function addButtonElement() {
     const modalContainer = document.createElement("div");
     modalContainer.className = "modal";
     modalContainer.style.position = "fixed";
+    modalContainer.style.zIndex = "99";
     modalContainer.style.top = "0";
     modalContainer.style.left = "0";
-    modalContainer.style.right = "0";
     modalContainer.style.width = "100%";
     modalContainer.style.height = "100%";
     modalContainer.style.backgroundColor = "rgba(0, 0, 0, 0.5)";
