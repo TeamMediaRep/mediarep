@@ -56,19 +56,6 @@ function addButtonElement() {
   newButton.textContent = "Evaluate Claims";
   newButton.className = "buttonn";
 
-  //styling for button
-  // newButton.style.background = "#E4572E";
-  // // newButton.style.position = "relative";
-  // newButton.style.top = "18em";
-  // newButton.style.left = "46em";
-  // // newButton.style.zIndex = 8000;
-  // newButton.style.color = "white";
-  // newButton.style.width = "175px";
-  // newButton.style.height = "40px";
-  // newButton.style.borderRadius = "10px";
-  // newButton.style.padding = "0.5em";
-  // newButton.style.boxSizing = "border-box";
-
   //attach button to page
   const currentButton = document.getElementById("headerMain");
   document.body.insertAdjacentElement("afterbegin", newButton, currentButton);
@@ -83,14 +70,12 @@ function addButtonElement() {
   newButton.onclick = function (e) {
     e.preventDefault();
 
-    // const targetNode =
-    //   allDivs[0].firstChild.childNodes[3].childNodes[1].childNodes[1]
-    //     .childNodes[1].childNodes[1];
     const targetNode = document.getElementById("root");
     targetNode.classList.add("testing");
 
     // create the debunking modal
     const modalContainer = document.createElement("div");
+    modalContainer.className = "modal";
     modalContainer.style.position = "fixed";
     modalContainer.style.top = "0";
     modalContainer.style.left = "0";
@@ -104,6 +89,7 @@ function addButtonElement() {
     modalContainer.style.transition = "visibility 0s linear 0.25s, opacity 0.25s 0s, transform 0.25s";
 
     const debunkModal = document.createElement("div");
+    debunkModal.className = "modal-content";
     debunkModal.innerHTML = `Misleading claim alert! <br/><br/>${displayText}<br/>`;
     debunkModal.style.background = "#fefefe";
     debunkModal.style.boxShadow =
@@ -114,7 +100,6 @@ function addButtonElement() {
     debunkModal.style.width = "24rem";
 
     debunkModal.style.position = "absolute";
-    // debunkModal.style.top = "0";
     debunkModal.style.top = "50%";
     debunkModal.style.left = "50%";
     debunkModal.style.transform = "translate(-50%, -50%)";
@@ -123,6 +108,7 @@ function addButtonElement() {
     modalContainer.appendChild(debunkModal);
 
     const closeButton = document.createElement("span");
+    closeButton.className = "close-button";
     closeButton.innerHTML = "&times;";
     closeButton.style.float = "right";
     closeButton.style.width = "1.5rem";
@@ -133,31 +119,31 @@ function addButtonElement() {
     closeButton.style.backgroundColor = "#fefefe";
 
     debunkModal.prepend(closeButton);
-    function toggleModal() {
-      modalContainer.classList.toggle("button-showing-debunk");
-    }
-
+    
     // logic here to link clicking with stuff happening
     if (newButton.classList.contains("button-showing-debunk")) {
-      newButton.classList.remove("button-showing-debunk");
-      newButton.textContent = "Evaluate Claims";
-      newButton.style.background = "#E4572E";
-      const modalChild = targetNode.lastChild;
-      targetNode.removeChild(modalChild);
-    } else {
-      newButton.classList.add("button-showing-debunk");
-      newButton.textContent = "Done";
-      newButton.style.background = "black";
+        newButton.classList.remove("button-showing-debunk");
+        newButton.textContent = "Evaluate Claims";
+        newButton.style.background = "#E4572E";
+        const modalChild = targetNode.lastChild;
+        targetNode.removeChild(modalChild);
+      } else {
+          // show modal styles
+          modalContainer.style.opacity = "1";
+          modalContainer.style.visibility = "visible";
+          modalContainer.style.transform = "scale(1.0)";
+          modalContainer.style.transition = "visibility 0s linear 0s, opacity 0.25s 0s, transform 0.25s";
+          targetNode.appendChild(modalContainer);
 
-      // show modal styles
-      modalContainer.style.opacity = "1";
-      modalContainer.style.visibility = "visible";
-      modalContainer.style.transform = "scale(1.0)";
-      modalContainer.style.transition = "visibility 0s linear 0s, opacity 0.25s 0s, transform 0.25s";
+          function toggleModal() {
+            modalContainer.style.visibility = "hidden";
+          }
 
-      targetNode.appendChild(modalContainer);
+          closeButton.addEventListener("click", toggleModal);
+        }
+
+      };
     }
-  };
-}
-
-document.body.onload = addButtonElement;
+    
+    document.body.onload = addButtonElement;
+    
