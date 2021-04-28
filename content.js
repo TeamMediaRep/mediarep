@@ -53,21 +53,8 @@ const displayText = displayTextOptions[firstKeyword];
 function addButtonElement() {
   //create a new div element
   const newButton = document.createElement("button");
-  newButton.textContent = "Click to Analyze";
+  newButton.textContent = "Evaluate Claims";
   newButton.className = "buttonn";
-
-  //styling for button
-  // newButton.style.background = "#E4572E";
-  // // newButton.style.position = "relative";
-  // newButton.style.top = "18em";
-  // newButton.style.left = "46em";
-  // // newButton.style.zIndex = 8000;
-  // newButton.style.color = "white";
-  // newButton.style.width = "175px";
-  // newButton.style.height = "40px";
-  // newButton.style.borderRadius = "10px";
-  // newButton.style.padding = "0.5em";
-  // newButton.style.boxSizing = "border-box";
 
   //attach button to page
   const currentButton = document.getElementById("headerMain");
@@ -83,13 +70,26 @@ function addButtonElement() {
   newButton.onclick = function (e) {
     e.preventDefault();
 
-    const targetNode =
-      allDivs[0].firstChild.childNodes[3].childNodes[1].childNodes[1]
-        .childNodes[1].childNodes[1];
+    const targetNode = document.getElementById("root");
     targetNode.classList.add("testing");
 
     // create the debunking modal
+    const modalContainer = document.createElement("div");
+    modalContainer.className = "modal";
+    modalContainer.style.position = "fixed";
+    modalContainer.style.zIndex = "99";
+    modalContainer.style.top = "0";
+    modalContainer.style.left = "0";
+    modalContainer.style.width = "100%";
+    modalContainer.style.height = "100%";
+    modalContainer.style.backgroundColor = "rgba(0, 0, 0, 0.5)";
+    modalContainer.style.opacity = "0";
+    modalContainer.style.visibility = "hidden";
+    modalContainer.style.transform = "scale(1.1)";
+    modalContainer.style.transition = "visibility 0s linear 0.25s, opacity 0.25s 0s, transform 0.25s";
+
     const debunkModal = document.createElement("div");
+    debunkModal.className = "modal-content";
     debunkModal.innerHTML = `Misleading claim alert! <br/><br/>${displayText}<br/>`;
     debunkModal.style.background = "#fefefe";
     debunkModal.style.boxShadow =
@@ -97,22 +97,53 @@ function addButtonElement() {
     debunkModal.style.borderRadius = "2px";
     debunkModal.style.padding = "12px";
     debunkModal.style.height = "300px";
+    debunkModal.style.width = "24rem";
 
+    debunkModal.style.position = "absolute";
+    debunkModal.style.top = "50%";
+    debunkModal.style.left = "50%";
+    debunkModal.style.transform = "translate(-50%, -50%)";
+
+
+    modalContainer.appendChild(debunkModal);
+
+    const closeButton = document.createElement("span");
+    closeButton.className = "close-button";
+    closeButton.innerHTML = "&times;";
+    closeButton.style.float = "right";
+    closeButton.style.width = "1.5rem";
+    closeButton.style.lineHeight = "1.5rem";
+    closeButton.style.textAlign = "center";
+    closeButton.style.cursor = "pointer";
+    closeButton.style.borderRadius = "0.25rem";
+    closeButton.style.backgroundColor = "#fefefe";
+
+    debunkModal.prepend(closeButton);
+    
     // logic here to link clicking with stuff happening
     if (newButton.classList.contains("button-showing-debunk")) {
-      newButton.classList.remove("button-showing-debunk");
-      newButton.textContent = "Click to Analyze";
-      newButton.style.background = "#E4572E";
-      const modalChild = targetNode.lastChild;
-      targetNode.removeChild(modalChild);
-    } else {
-      newButton.classList.add("button-showing-debunk");
-      newButton.textContent = "Done";
-      newButton.style.background = "black";
+        newButton.classList.remove("button-showing-debunk");
+        newButton.textContent = "Evaluate Claims";
+        newButton.style.background = "#E4572E";
+        const modalChild = targetNode.lastChild;
+        targetNode.removeChild(modalChild);
+      } else {
+          // show modal styles
+          modalContainer.style.opacity = "1";
+          modalContainer.style.visibility = "visible";
+          modalContainer.style.transform = "scale(1.0)";
+          modalContainer.style.transition = "visibility 0s linear 0s, opacity 0.25s 0s, transform 0.25s";
+          targetNode.appendChild(modalContainer);
 
-      targetNode.appendChild(debunkModal);
+          function toggleModal() {
+            modalContainer.style.visibility = "hidden";
+          }
+
+          closeButton.addEventListener("click", toggleModal);
+        }
+
+      };
     }
-  };
-}
-
-document.body.onload = addButtonElement;
+    
+    document.body.onload = addButtonElement;
+    
