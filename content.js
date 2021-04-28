@@ -115,6 +115,17 @@ function addButtonElement() {
     // add exit button to modal
     debunkModal.prepend(closeButton);
 
+    const nextButton = document.createElement("button");
+    nextButton.className = "next-option";
+    nextButton.innerHTML = "&#62";
+
+    const prevButton = document.createElement("button");
+    prevButton.className = "prev-option";
+    prevButton.innerHTML = "&#60";
+
+    debunkModal.appendChild(prevButton);
+    debunkModal.appendChild(nextButton);
+
     function toggleModal() {
       modalContainer.style.visibility = "hidden";
     }
