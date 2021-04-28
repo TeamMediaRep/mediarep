@@ -73,7 +73,6 @@ function addButtonElement() {
   const targetNode =
     allDivs[0].firstChild.childNodes[3].childNodes[1].childNodes[1]
       .childNodes[1].childNodes[1];
-  targetNode.classList.add("testing");
 
   // create the debunking modal
   const debunkModal = document.createElement("div");
