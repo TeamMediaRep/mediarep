@@ -98,7 +98,7 @@ function addButtonElement() {
     } else {
       newButton.classList.add("button-showing-debunk");
       newButton.textContent = "Done";
-      newButton.style.background = "#black";
+      newButton.style.background = "black";
 
       targetNode.appendChild(debunkModal);
     }
