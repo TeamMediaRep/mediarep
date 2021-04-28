@@ -30,8 +30,8 @@ function textMatcher(item) {
 const firstKeyword = matched[0].toLowerCase();
 
 const displayTextOptions = {
-  "whole grains":
-    "Whole grains- \n While whole grains are better than refined grains, watch out for added sugars or processed sugars which increase the calorie density of the item, cause inflammation, and have been shown to have a direct link to chronic illnesses. Opt for now added sugar and higher fiber varieties.",
+  "whole grain":
+    "Whole grain- \n While whole grains are better than refined grains, watch out for added sugars or processed sugars which increase the calorie density of the item, cause inflammation, and have been shown to have a direct link to chronic illnesses. Opt for now added sugar and higher fiber varieties.",
   "high fiber":
     "High fiber- \n \n Marketed as high fiber and healthier, this product might contain added sugars, making it calorie and carb dense, which has been shown to cause blood usgar spikes and leads to cardiovasular disease and insulin resistance if prolonged. ",
   "gluten free":
@@ -80,7 +80,12 @@ function addButtonElement() {
     // create modal content
     const debunkModal = document.createElement("div");
     debunkModal.className = "modal-content";
-    debunkModal.innerHTML = `Misleading claim alert! <br/><br/>${displayText}<br/>`;
+
+    if (displayText === undefined) {
+      debunkModal.innerHTML = "No marketing claims";
+    } else {
+      debunkModal.innerHTML = `Misleading claim alert! <br/><br/>${displayText}<br/>`;
+    }
 
     // attach modal content to modal container
     modalContainer.appendChild(debunkModal);
