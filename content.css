@@ -1,10 +1,6 @@
 .buttonn {
   background-color: #e4572e;
   border: "solid 2px #dfdfdf";
-  /* position: "relative"; */
-  /* top: 18em; */
-  /* left: 46em; */
-  /* z-index: 8000; */
   color: white;
   width: 50%;
   height: 50%;
@@ -12,6 +8,10 @@
   padding: 0.5em;
   margin-left: 7em;
   box-sizing: border-box;
+}
+
+.mutedOrange {
+  background-color: #d1826b;
 }
 
 .modal {
@@ -44,7 +44,7 @@
 .show-modal {
   opacity: 1;
   visibility: visible;
-  transform: scale(1.0);
+  transform: scale(1);
   transition: visibility 0s linear 0s, opacity 0.25s 0s, transform 0.25s;
 }
 
@@ -56,8 +56,4 @@
   cursor: pointer;
   border-radius: 0.25rem;
   background-color: #fefefe;
-}
-
-.testing {
-  background-color: "red";
 }
