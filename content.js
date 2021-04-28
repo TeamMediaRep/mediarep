@@ -37,8 +37,8 @@ function addButtonElement() {
   };
 
   const displayTextOptions = {
-    "whole grains":
-      "Whole grains- \n While whole grains are better than refined grains, watch out for added sugars or processed sugars which increase the calorie density of the item, cause inflammation, and have been shown to have a direct link to chronic illnesses. Opt for now added sugar and higher fiber varieties.",
+    "whole grain":
+      "Whole grain- \n While whole grains are better than refined grains, watch out for added sugars or processed sugars which increase the calorie density of the item, cause inflammation, and have been shown to have a direct link to chronic illnesses. Opt for now added sugar and higher fiber varieties.",
     "high fiber":
       "High fiber- \n \n Marketed as high fiber and healthier, this product might contain added sugars, making it calorie and carb dense, which has been shown to cause blood usgar spikes and leads to cardiovasular disease and insulin resistance if prolonged. ",
     "gluten free":
@@ -59,7 +59,7 @@ function addButtonElement() {
 
   //create a new div element
   const newButton = document.createElement("button");
-  newButton.textContent = "Click to Analyze";
+  newButton.textContent = "Evaluate Claims";
   newButton.className = "buttonn";
 
   // find elements we will be appending to
@@ -89,18 +89,48 @@ function addButtonElement() {
   newButton.onclick = function (e) {
     e.preventDefault();
 
+    const targetNode = document.getElementById("root");
+
+    // create modal
+    const modalContainer = document.createElement("div");
+    modalContainer.className = "modal";
+
+    // create modal content
+    const debunkModal = document.createElement("div");
+    debunkModal.className = "modal-content";
+
+    if (displayText === undefined) {
+      debunkModal.innerHTML = "No marketing claims";
+    } else {
+      debunkModal.innerHTML = `Misleading claim alert! <br/><br/>${displayText}<br/>`;
+    }
+
+    // attach modal content to modal container
+    modalContainer.appendChild(debunkModal);
+
+    // create exit button for modal
+    const closeButton = document.createElement("span");
+    closeButton.className = "close-button";
+    closeButton.innerHTML = "&times;";
+
+    // add exit button to modal
+    debunkModal.prepend(closeButton);
+
+    function toggleModal() {
+      modalContainer.style.visibility = "hidden";
+    }
+
+    // logic here to link clicking with stuff happening
     if (newButton.classList.contains("button-showing-debunk")) {
       newButton.classList.remove("button-showing-debunk");
-      newButton.textContent = "Click to Analyze";
-      newButton.style.background = "#E4572E";
+      newButton.textContent = "Evaluate Claims";
       const modalChild = targetNode.lastChild;
       targetNode.removeChild(modalChild);
     } else {
-      newButton.classList.add("button-showing-debunk");
-      newButton.textContent = "Done";
-      newButton.style.background = "black";
-
-      targetNode.appendChild(debunkModal);
+      // show modal styles
+      modalContainer.classList.add("show-modal");
+      targetNode.appendChild(modalContainer);
+      closeButton.addEventListener("click", toggleModal);
     }
   };
 }
