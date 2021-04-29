@@ -79,12 +79,6 @@ function addButtonElement() {
   // create the debunking modal
   const debunkModal = document.createElement("div");
   debunkModal.innerHTML = `Misleading claim alert! <br/><br/>${displayText}<br/>`;
-  debunkModal.style.background = "#fefefe";
-  debunkModal.style.boxShadow =
-    "0 4px 8px 0 rgba(0, 0, 0, 0.2), 0 6px 20px 0 rgba(0, 0, 0, 0.19)";
-  debunkModal.style.borderRadius = "2px";
-  debunkModal.style.padding = "12px";
-  debunkModal.style.height = "300px";
 
   // add functionality to the button click
   newButton.onclick = function (e) {
@@ -116,6 +110,53 @@ function addButtonElement() {
 
     // add exit button to modal
     debunkModal.prepend(closeButton);
+
+    const nextButton = document.createElement("button");
+    nextButton.className = "next-option";
+    nextButton.innerHTML = "&#62";
+
+    const prevButton = document.createElement("button");
+    prevButton.className = "prev-option";
+    prevButton.innerHTML = "&#60";
+
+    debunkModal.appendChild(prevButton);
+    debunkModal.appendChild(nextButton);
+
+    let position = 0;
+    function viewNext() {
+      if (position >= matched.length - 1) {
+        position = 0;
+        debunkModal.innerHTML = `Misleading claim alert! <br/><br/>${displayTextOptions[matched[position].toLowerCase()]}`;
+        debunkModal.prepend(closeButton);
+        debunkModal.appendChild(prevButton);
+        debunkModal.appendChild(nextButton);
+        return;
+      }
+      debunkModal.innerHTML = `Misleading claim alert! <br/><br/>${displayTextOptions[matched[position + 1].toLowerCase()]}`;
+      debunkModal.prepend(closeButton);
+      debunkModal.appendChild(prevButton);
+      debunkModal.appendChild(nextButton);
+      position++;
+    }
+
+    function viewPrev() {
+      if (position < 1) {
+        position = matched.length - 1;
+        debunkModal.innerHTML = `Misleading claim alert! <br/><br/>${displayTextOptions[matched[position].toLowerCase()]}`;
+        debunkModal.prepend(closeButton);
+        debunkModal.appendChild(prevButton);
+        debunkModal.appendChild(nextButton);
+        return;
+      }
+      debunkModal.innerHTML = `Misleading claim alert! <br/><br/>${displayTextOptions[matched[position - 1].toLowerCase()]}`;
+      debunkModal.prepend(closeButton);
+      debunkModal.appendChild(prevButton);
+      debunkModal.appendChild(nextButton);
+      position--;
+    }
+
+    prevButton.addEventListener("click", viewPrev);
+    nextButton.addEventListener("click", viewNext);
 
     function toggleModal() {
       modalContainer.style.visibility = "hidden";
