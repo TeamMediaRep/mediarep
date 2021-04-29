@@ -68,11 +68,13 @@ function addButtonElement() {
     allDivs[0].firstChild.childNodes[3].childNodes[1].childNodes[1]
       .childNodes[1].firstChild.firstChild.firstChild;
 
-  buttonContainerNode.appendChild(newButton);
-
-  const targetNode =
-    allDivs[0].firstChild.childNodes[3].childNodes[1].childNodes[1]
-      .childNodes[1].childNodes[1];
+  // add extension button to page if not already there
+  if (
+    buttonContainerNode.childNodes &&
+    buttonContainerNode.lastChild.tagName !== "BUTTON"
+  ) {
+    buttonContainerNode.appendChild(newButton);
+  }
 
   // create the debunking modal
   const debunkModal = document.createElement("div");
