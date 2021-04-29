@@ -124,13 +124,13 @@ function addButtonElement() {
     function viewNext() {
       if (position >= matched.length - 1) {
         position = 0;
-        debunkModal.innerHTML = displayTextOptions[matched[position].toLowerCase()];
+        debunkModal.innerHTML = `Misleading claim alert! <br/><br/>${displayTextOptions[matched[position].toLowerCase()]}`;
         debunkModal.prepend(closeButton);
         debunkModal.appendChild(prevButton);
         debunkModal.appendChild(nextButton);
         return;
       }
-      debunkModal.innerHTML = displayTextOptions[matched[position + 1].toLowerCase()];
+      debunkModal.innerHTML = `Misleading claim alert! <br/><br/>${displayTextOptions[matched[position + 1].toLowerCase()]}`;
       debunkModal.prepend(closeButton);
       debunkModal.appendChild(prevButton);
       debunkModal.appendChild(nextButton);
@@ -140,13 +140,13 @@ function addButtonElement() {
     function viewPrev() {
       if (position < 1) {
         position = matched.length - 1;
-        debunkModal.innerHTML = displayTextOptions[matched[position].toLowerCase()];
+        debunkModal.innerHTML = `Misleading claim alert! <br/><br/>${displayTextOptions[matched[position].toLowerCase()]}`;
         debunkModal.prepend(closeButton);
         debunkModal.appendChild(prevButton);
         debunkModal.appendChild(nextButton);
         return;
       }
-      debunkModal.innerHTML = displayTextOptions[matched[position - 1].toLowerCase()];
+      debunkModal.innerHTML = `Misleading claim alert! <br/><br/>${displayTextOptions[matched[position - 1].toLowerCase()]}`;
       debunkModal.prepend(closeButton);
       debunkModal.appendChild(prevButton);
       debunkModal.appendChild(nextButton);
