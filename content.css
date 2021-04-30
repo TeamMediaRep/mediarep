@@ -9,9 +9,8 @@
   margin-left: 7em;
   box-sizing: border-box;
 }
-
-.mutedOrange {
-  background-color: #d1826b;
+button:hover {
+  background-color: #b14121;
 }
 
 .modal {
