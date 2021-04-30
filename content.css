@@ -56,3 +56,30 @@ button:hover {
   border-radius: 0.25rem;
   background-color: #fefefe;
 }
+
+.alert-icon {
+  height: 1.5em;
+  width: 1.5em;
+  margin-right: 1em;
+}
+
+.wrap {
+  display: flex;
+  flex-direction: row;
+  justify-content: center;
+  align-items: center;
+  margin: 1em 0em 1em 0em;
+  font-size: 18px;
+}
+
+.claim-text {
+  font-weight: bold;
+}
+
+.debunked-claim-title {
+  font-size: 24px;
+  display: flex;
+  justify-content: center;
+  padding-top: 0.5em;
+  padding-bottom: 0.5em;
+}

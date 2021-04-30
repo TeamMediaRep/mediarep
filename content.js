@@ -84,31 +84,39 @@ function addButtonElement() {
     const modalContainer = document.createElement("div");
     modalContainer.className = "modal";
 
+    //add icon for text box
+    const alertIcon = document.createElement("img");
+    const source = chrome.runtime.getURL("images/alert_orange.png");
+    alertIcon.src = source;
+    const iconDiv = document.createElement("div");
+    iconDiv.classList.add("alert-icon");
+    iconDiv.appendChild(alertIcon);
+
     // create modal content
     const debunkModal = document.createElement("div");
     debunkModal.className = "modal-content";
-    const debunkTitle = `Misleading claim alert: ${matched[0]}`;
-    const displayText = displayTextOptions[firstKeyword()];
+    const misleadingClaimText = document.createElement("div");
+    misleadingClaimText.innerHTML = "Misleading claim alert!";
+    misleadingClaimText.prepend(iconDiv);
+    misleadingClaimText.classList.add("wrap");
+    misleadingClaimText.classList.add("claim-text");
+
+    const debunkedClaim = document.createElement("div");
+    debunkedClaim.innerHTML = matched[0];
+    debunkedClaim.classList.add("debunked-claim-title");
+    const displayText = document.createElement("div");
+    displayText.innerHTML = displayTextOptions[firstKeyword()];
 
     if (displayText === undefined) {
       debunkModal.innerHTML = "No marketing claims";
     } else {
-      debunkModal.innerHTML = `${debunkTitle} <br/><br/>${displayText}`;
+      debunkModal.appendChild(debunkedClaim);
+      debunkModal.appendChild(misleadingClaimText);
+      debunkModal.appendChild(displayText);
     }
 
     // attach modal content to modal container
     modalContainer.appendChild(debunkModal);
-
-    //add icon for text box
-    const alertIcon = document.createElement("img");
-    const source = chrome.runtime.getURL("images/alert_small.png");
-    alertIcon.src = source;
-    const iconDiv = document.createElement("div");
-    // iconDiv.classList.add("alert-icon");
-    iconDiv.appendChild(alertIcon);
-
-    // attach alert icon to modal
-    debunkModal.prepend(iconDiv);
 
     // create exit button for modal
     const closeButton = document.createElement("span");
