@@ -118,6 +118,61 @@ function addButtonElement() {
     // add exit button to modal
     debunkModal.prepend(closeButton);
 
+    const nextButton = document.createElement("button");
+    nextButton.className = "next-option";
+    nextButton.innerHTML = "&#62";
+
+    const prevButton = document.createElement("button");
+    prevButton.className = "prev-option";
+    prevButton.innerHTML = "&#60";
+
+    debunkModal.appendChild(prevButton);
+    debunkModal.appendChild(nextButton);
+
+    let position = 0;
+    function viewNext() {
+      if (position >= matched.length - 1) {
+        position = 0;
+        debunkModal.innerHTML = `Misleading claim alert! <br/><br/>${
+          displayTextOptions[matched[position].toLowerCase()]
+        }`;
+        debunkModal.prepend(closeButton);
+        debunkModal.appendChild(prevButton);
+        debunkModal.appendChild(nextButton);
+        return;
+      }
+      debunkModal.innerHTML = `Misleading claim alert! <br/><br/>${
+        displayTextOptions[matched[position + 1].toLowerCase()]
+      }`;
+      debunkModal.prepend(closeButton);
+      debunkModal.appendChild(prevButton);
+      debunkModal.appendChild(nextButton);
+      position++;
+    }
+
+    function viewPrev() {
+      if (position < 1) {
+        position = matched.length - 1;
+        debunkModal.innerHTML = `Misleading claim alert! <br/><br/>${
+          displayTextOptions[matched[position].toLowerCase()]
+        }`;
+        debunkModal.prepend(closeButton);
+        debunkModal.appendChild(prevButton);
+        debunkModal.appendChild(nextButton);
+        return;
+      }
+      debunkModal.innerHTML = `Misleading claim alert! <br/><br/>${
+        displayTextOptions[matched[position - 1].toLowerCase()]
+      }`;
+      debunkModal.prepend(closeButton);
+      debunkModal.appendChild(prevButton);
+      debunkModal.appendChild(nextButton);
+      position--;
+    }
+
+    prevButton.addEventListener("click", viewPrev);
+    nextButton.addEventListener("click", viewNext);
+
     function toggleModal() {
       modalContainer.style.visibility = "hidden";
     }
