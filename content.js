@@ -1,4 +1,3 @@
-// import alertImage from "./images/alert_small.png";
 function addButtonElement() {
   console.log("Chrome extension running...");
 
@@ -99,6 +98,17 @@ function addButtonElement() {
 
     // attach modal content to modal container
     modalContainer.appendChild(debunkModal);
+
+    //add icon for text box
+    const alertIcon = document.createElement("img");
+    const source = chrome.runtime.getURL("images/alert_small.png");
+    alertIcon.src = source;
+    const iconDiv = document.createElement("div");
+    // iconDiv.classList.add("alert-icon");
+    iconDiv.appendChild(alertIcon);
+
+    // attach alert icon to modal
+    debunkModal.prepend(iconDiv);
 
     // create exit button for modal
     const closeButton = document.createElement("span");

@@ -12,6 +12,7 @@
   "background": {
     "scripts": ["background.js"]
   },
+  "web_accessible_resources": ["*.png"],
   "permissions": ["tabs", "webNavigation", "*://www.target.com/*"],
   "browser_action": {
     "default_popup": "popup.html",
