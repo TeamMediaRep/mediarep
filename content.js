@@ -124,7 +124,7 @@ function addButtonElement() {
     misleadingClaimText.prepend(iconDiv);
 
     let position = 0;
-    function buildOutModal(position) {
+    function buildOutModal() {
       const match = matched[position];
 
       if (matched[0] === undefined) {
@@ -163,10 +163,10 @@ function addButtonElement() {
     function viewNext() {
       if (position >= matched.length - 1) {
         position = 0;
-        buildOutModal(position);
+        buildOutModal();
         return;
       }
-      buildOutModal(position);
+      buildOutModal();
       position++;
     }
 
@@ -176,10 +176,10 @@ function addButtonElement() {
         buildOutModal();
         return;
       }
-      buildOutModal(position);
+      buildOutModal();
       position--;
     }
-    buildOutModal(position);
+    buildOutModal();
     prevButton.addEventListener("click", viewPrev);
     nextButton.addEventListener("click", viewNext);
 
