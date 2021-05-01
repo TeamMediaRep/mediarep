@@ -82,6 +82,7 @@ function addButtonElement() {
     closeButton.innerHTML = "&times;";
 
     const nextButton = document.createElement("button");
+    nextButton.classList.add("flex");
     nextButton.className = "next-option";
     nextButton.innerHTML = "&#62";
 
@@ -90,6 +91,7 @@ function addButtonElement() {
     prevButton.innerHTML = "&#60";
 
     const navButtonContainer = document.createElement("div");
+    navButtonContainer.classList.add("nav");
     navButtonContainer.appendChild(prevButton);
     navButtonContainer.appendChild(nextButton);
 
@@ -103,6 +105,7 @@ function addButtonElement() {
 
     // // text describing in more detail why it is misleading
     const displayText = document.createElement("div");
+    displayText.classList.add("debunk-text");
 
     // //create alert icon
     const alertIcon = document.createElement("img");
