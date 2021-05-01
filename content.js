@@ -106,6 +106,7 @@ function addButtonElement() {
     // // text describing in more detail why it is misleading
     const displayText = document.createElement("div");
     displayText.classList.add("debunk-text");
+    displayText.classList.add("bottom-modal-bg");
 
     // //create alert icon
     const alertIcon = document.createElement("img");
