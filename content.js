@@ -28,14 +28,6 @@ function addButtonElement() {
     }
   }
 
-  const firstKeyword = () => {
-    if (matched[0]) {
-      return matched[0].toLowerCase();
-    } else {
-      return "no match";
-    }
-  };
-
   const displayTextOptions = {
     "whole grain":
       "While whole grains are better than refined grains, watch out for added sugars or processed sugars which increase the calorie density of the item, cause inflammation, and have been shown to have a direct link to chronic illnesses. Opt for no added sugar and higher fiber varieties.",
@@ -92,6 +84,22 @@ function addButtonElement() {
     iconDiv.classList.add("alert-icon");
     iconDiv.appendChild(alertIcon);
 
+    // create exit button for modal
+    const closeButton = document.createElement("span");
+    closeButton.className = "close-button";
+    closeButton.innerHTML = "&times;";
+
+    const nextButton = document.createElement("button");
+    nextButton.className = "next-option";
+    nextButton.innerHTML = "&#62";
+
+    const prevButton = document.createElement("button");
+    prevButton.className = "prev-option";
+    prevButton.innerHTML = "&#60";
+
+    // attach modal content to modal container
+    // modalContainer.appendChild(debunkModal);
+
     // create modal content
     const debunkModal = document.createElement("div");
     debunkModal.className = "modal-content";
@@ -102,82 +110,51 @@ function addButtonElement() {
     misleadingClaimText.classList.add("claim-text");
 
     const debunkedClaim = document.createElement("div");
-    debunkedClaim.innerHTML = matched[0];
+    // debunkedClaim.innerHTML = matched[0];
     debunkedClaim.classList.add("debunked-claim-title");
     const displayText = document.createElement("div");
-    displayText.innerHTML = displayTextOptions[firstKeyword()];
-
-    if (displayText === undefined) {
-      debunkModal.innerHTML = "No marketing claims";
-    } else {
-      debunkModal.appendChild(debunkedClaim);
-      debunkModal.appendChild(misleadingClaimText);
-      debunkModal.appendChild(displayText);
-    }
-
-    // attach modal content to modal container
-    modalContainer.appendChild(debunkModal);
-
-    // create exit button for modal
-    const closeButton = document.createElement("span");
-    closeButton.className = "close-button";
-    closeButton.innerHTML = "&times;";
-
-    // add exit button to modal
-    debunkModal.prepend(closeButton);
-
-    const nextButton = document.createElement("button");
-    nextButton.className = "next-option";
-    nextButton.innerHTML = "&#62";
-
-    const prevButton = document.createElement("button");
-    prevButton.className = "prev-option";
-    prevButton.innerHTML = "&#60";
-
-    debunkModal.appendChild(prevButton);
-    debunkModal.appendChild(nextButton);
 
     let position = 0;
-    function viewNext() {
-      if (position >= matched.length - 1) {
-        position = 0;
-        debunkModal.innerHTML = `Misleading claim alert! <br/><br/>${
-          displayTextOptions[matched[position].toLowerCase()]
-        }`;
+    function buildOutModal(position) {
+      const match = matched[position];
+
+      if (matched[0] === undefined) {
+        debunkModal.innerHTML = "No marketing claims";
+        debunkModal.prepend(closeButton);
+      } else {
+        debunkModal.innerHTML = match.toUpperCase();
+        displayText.innerHTML = displayTextOptions[`${match.toLowerCase()}`];
+        debunkModal.appendChild(debunkedClaim);
+        debunkModal.appendChild(misleadingClaimText);
+        debunkModal.appendChild(displayText);
         debunkModal.prepend(closeButton);
         debunkModal.appendChild(prevButton);
         debunkModal.appendChild(nextButton);
+      }
+    }
+    // temporarily moving this here:
+    modalContainer.appendChild(debunkModal);
+
+    function viewNext() {
+      if (position >= matched.length - 1) {
+        position = 0;
+        buildOutModal(position);
         return;
       }
-      debunkModal.innerHTML = `Misleading claim alert! <br/><br/>${
-        displayTextOptions[matched[position + 1].toLowerCase()]
-      }`;
-      debunkModal.prepend(closeButton);
-      debunkModal.appendChild(prevButton);
-      debunkModal.appendChild(nextButton);
+      buildOutModal(position);
       position++;
     }
 
     function viewPrev() {
       if (position < 1) {
         position = matched.length - 1;
-        debunkModal.innerHTML = `Misleading claim alert! <br/><br/>${
-          displayTextOptions[matched[position].toLowerCase()]
-        }`;
-        debunkModal.prepend(closeButton);
-        debunkModal.appendChild(prevButton);
-        debunkModal.appendChild(nextButton);
+        buildOutModal();
         return;
       }
-      debunkModal.innerHTML = `Misleading claim alert! <br/><br/>${
-        displayTextOptions[matched[position - 1].toLowerCase()]
-      }`;
-      debunkModal.prepend(closeButton);
-      debunkModal.appendChild(prevButton);
-      debunkModal.appendChild(nextButton);
+      buildOutModal(position);
       position--;
     }
-
+    buildOutModal(position);
     prevButton.addEventListener("click", viewPrev);
     nextButton.addEventListener("click", viewNext);
 
