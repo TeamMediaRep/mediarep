@@ -28,14 +28,6 @@ function addButtonElement() {
     }
   }
 
-  const firstKeyword = () => {
-    if (matched[0]) {
-      return matched[0].toLowerCase();
-    } else {
-      return "no match";
-    }
-  };
-
   const displayTextOptions = {
     "whole grain":
       "Whole grain- \n While whole grains are better than refined grains, watch out for added sugars or processed sugars which increase the calorie density of the item, cause inflammation, and have been shown to have a direct link to chronic illnesses. Opt for now added sugar and higher fiber varieties.",
@@ -54,8 +46,6 @@ function addButtonElement() {
     "real cocoa":
       "Real cocoa- \n Many ingredients claimed as “real” in processed foods are processed at high temperatures or use processed derivatives of ingredients to increase shelf life and reduce costs – and do not retain all nutritional benefits or taste of the original ingredients.",
   };
-
-  const displayText = displayTextOptions[firstKeyword()];
 
   //create a new div element
   const newButton = document.createElement("button");
@@ -111,6 +101,7 @@ function addButtonElement() {
     function buildOutModal() {
       if (matched[0] === undefined) {
         debunkModal.innerHTML = "No marketing claims";
+        debunkModal.prepend(closeButton);
       } else {
         debunkModal.innerHTML = `Misleading claim alert! <br/><br/>${
           displayTextOptions[matched[position].toLowerCase()]
