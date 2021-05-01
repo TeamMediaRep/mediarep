@@ -9,7 +9,7 @@
   margin-left: 7em;
   box-sizing: border-box;
 }
-button:hover {
+button.buttonn:hover {
   background-color: #b14121;
 }
 
@@ -101,4 +101,12 @@ button:hover {
   padding-left: 1em;
   padding-right: 1em;
   padding-bottom: 1em;
+}
+
+button.prev-option:hover {
+  color: black;
+}
+
+button.next-option:hover {
+  color: black;
 }
