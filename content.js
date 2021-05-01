@@ -131,6 +131,7 @@ function addButtonElement() {
         const noClaimFoundMessage = document.createElement("div");
         noClaimFoundMessage.classList.add("claim-text");
         noClaimFoundMessage.classList.add("wrap");
+        noClaimFoundMessage.classList.add("bottom-modal-bg");
         noClaimFoundMessage.innerHTML = "No marketing claims";
 
         debunkModal.prepend(closeButton);
