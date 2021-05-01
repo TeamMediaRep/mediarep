@@ -48,9 +48,14 @@ function addButtonElement() {
   };
 
   //create a new div element
-  const newButton = document.createElement("button");
-  newButton.textContent = "Evaluate Claims";
-  newButton.classList.add("buttonn");
+  const newButton = document.createElement("a");
+  const buttonLogo = document.createElement("img");
+  const source = chrome.runtime.getURL("images/logowhite.png");
+  buttonLogo.className = "button-logo";
+  buttonLogo.src = source;
+  newButton.innerHTML = `<span style="font-size: 15px; margin-left: 5px;">Evaluate Claims</span>`;
+  newButton.prepend(buttonLogo);
+  newButton.className = "buttonn";
 
   // find elements we will be appending to
   const allDivs = document.getElementsByTagName("div");

@@ -6,8 +6,15 @@
   height: 50%;
   border-radius: 10px;
   padding: 0.5em;
-  margin-left: 7em;
+  margin-left: 3em;
   box-sizing: border-box;
+  cursor: pointer;
+}
+
+.button-logo {
+  height: 25px;
+  width: 25px;
+  float: left;
 }
 button.buttonn:hover {
   background-color: #b14121;
