@@ -7,15 +7,15 @@ function addButtonElement() {
   const keywords = [
     "Gluten Free",
     "Heart Healthy",
-    "sugar free",
-    "lower cholesterol",
-    "WHOLE GRAIN",
+    "Sugar Free",
+    "Lowers Cholesterol",
+    "Whole Grain",
     "Whole Grains",
     "High Fiber",
     "Good source of Fiber",
     "Naturally Flavored",
-    "Real honey",
-    "Real cocoa",
+    "Real Honey",
+    "Real Cocoa",
   ];
   const matched = [];
 
@@ -30,21 +30,21 @@ function addButtonElement() {
 
   const displayTextOptions = {
     "whole grain":
-      "Whole grain- \n While whole grains are better than refined grains, watch out for added sugars or processed sugars which increase the calorie density of the item, cause inflammation, and have been shown to have a direct link to chronic illnesses. Opt for now added sugar and higher fiber varieties.",
+      "While whole grains are better than refined grains, watch out for added sugars or processed sugars which increase the calorie density of the item, cause inflammation, and have been shown to have a direct link to chronic illnesses. Opt for no added sugar and higher fiber varieties.",
     "high fiber":
-      "High fiber- \n \n Marketed as high fiber and healthier, this product might contain added sugars, making it calorie and carb dense, which has been shown to cause blood usgar spikes and leads to cardiovasular disease and insulin resistance if prolonged. ",
+      "Marketed as high fiber and healthier, this product might contain added sugars, making it calorie and carb dense, which has been shown to cause blood sugar spikes and leads to cardiovasular disease and insulin resistance if prolonged. ",
     "gluten free":
-      "Gluten free- \n \n Gluten free is mostly suggested for celiac disease patients and doesn’t carry any additional health advantagesfor others. Further gluten free products have lower dietary fiber, bringing the overall nutritional value down.",
+      "Gluten free is mostly suggested for celiac disease patients and doesn’t carry any additional health advantagesfor others. Further gluten free products have lower dietary fiber, bringing the overall nutritional value down.",
     "heart healthy":
-      "Heart healthy- \n \n The study supporting this claim has been long challenged by experts for its authenticity. Further, newer studies have shown that lowering cholesterol doesn’t affect heart health. Simple carbs and sugars consumption is directly linked to heart disease.",
-    "lower cholesterol":
-      "Lower cholesterol- \n Study supporting this claim has long been challenged by experts. Further, newer research shows that simple sugars are a major contributor to chronic illnesses as opposed to cholesterol.",
+      "The study supporting this claim has been long challenged by experts for its authenticity. Further, newer studies have shown that lowering cholesterol doesn’t affect heart health. Simple carbs and sugars consumption is directly linked to heart disease.",
+    "lowers cholesterol":
+      "Study supporting this claim has long been challenged by experts. Further, newer research shows that simple sugars are a major contributor to chronic illnesses as opposed to cholesterol.",
     "naturally flavored":
-      "Naturally flavored- \n The FDA doesn’t have any guidelines for “natural” food. So natural flavoring doesn’t mean healthier or better in any way.",
+      "The FDA doesn’t have any guidelines for “natural” food. So natural flavoring doesn’t mean healthier or better in any way.",
     "real honey":
-      "Real honey- \n Many ingredients claimed as “real” in processed foods are processed at high temperatures or use processed derivatives of ingredients to increase shelf life and reduce costs – and do not retain all nutritional benefits or taste of the original ingredients.",
+      " Many ingredients claimed as “real” in processed foods are processed at high temperatures or use processed derivatives of ingredients to increase shelf life and reduce costs – and do not retain all nutritional benefits or taste of the original ingredients.",
     "real cocoa":
-      "Real cocoa- \n Many ingredients claimed as “real” in processed foods are processed at high temperatures or use processed derivatives of ingredients to increase shelf life and reduce costs – and do not retain all nutritional benefits or taste of the original ingredients.",
+      "Many ingredients claimed as “real” in processed foods are processed at high temperatures or use processed derivatives of ingredients to increase shelf life and reduce costs – and do not retain all nutritional benefits or taste of the original ingredients.",
   };
 
   //create a new div element
@@ -81,16 +81,13 @@ function addButtonElement() {
     const modalContainer = document.createElement("div");
     modalContainer.className = "modal";
 
-    // create modal content
-    const debunkModal = document.createElement("div");
-    debunkModal.className = "modal-content";
-
     // create exit button for modal
     const closeButton = document.createElement("span");
     closeButton.className = "close-button";
     closeButton.innerHTML = "&times;";
 
     const nextButton = document.createElement("button");
+    nextButton.classList.add("flex");
     nextButton.className = "next-option";
     nextButton.innerHTML = "&#62";
 
@@ -98,24 +95,75 @@ function addButtonElement() {
     prevButton.className = "prev-option";
     prevButton.innerHTML = "&#60";
 
-    // attach modal content to modal container
-    modalContainer.appendChild(debunkModal);
+    const navButtonContainer = document.createElement("div");
+    navButtonContainer.classList.add("nav");
+    navButtonContainer.appendChild(prevButton);
+    navButtonContainer.appendChild(nextButton);
+
+    // create modal content box (the white div surrounding the content)
+    const debunkModal = document.createElement("div");
+    debunkModal.className = "modal-content";
+
+    // //Claim text (ie. 'Gluten free', or 'sugar free')
+    const debunkedClaim = document.createElement("div");
+    debunkedClaim.classList.add("debunked-claim-title");
+
+    // // text describing in more detail why it is misleading
+    const displayText = document.createElement("div");
+    displayText.classList.add("debunk-text");
+    displayText.classList.add("bottom-modal-bg");
+
+    // //create alert icon
+    const alertIcon = document.createElement("img");
+    const source = chrome.runtime.getURL("images/alert_orange.png");
+    alertIcon.src = source;
+    const iconDiv = document.createElement("div");
+    iconDiv.classList.add("alert-icon");
+    iconDiv.appendChild(alertIcon);
+
+    // //create div for misleading claim alert
+    const misleadingClaimText = document.createElement("div");
+    misleadingClaimText.innerHTML = "Misleading claim alert!";
+    misleadingClaimText.classList.add("wrap");
+    misleadingClaimText.classList.add("claim-text");
+    misleadingClaimText.prepend(iconDiv);
 
     let position = 0;
-
     function buildOutModal() {
+      const match = matched[position];
+
       if (matched[0] === undefined) {
-        debunkModal.innerHTML = "No marketing claims";
+        const noClaimFoundMessage = document.createElement("div");
+        noClaimFoundMessage.classList.add("claim-text");
+        noClaimFoundMessage.classList.add("wrap");
+        noClaimFoundMessage.classList.add("bottom-modal-bg");
+        noClaimFoundMessage.innerHTML = "No marketing claims";
+
+        debunkModal.prepend(closeButton);
+        debunkModal.appendChild(noClaimFoundMessage);
+      } else if (matched.length < 3) {
+        // temporarily set to 3 bc the last match of array never shows
+        // when bug is fixed, logic can be reset to (matched.length === 1)
+        debunkedClaim.innerHTML = match.toUpperCase();
+        displayText.innerHTML = displayTextOptions[`${match.toLowerCase()}`];
+
+        debunkModal.appendChild(debunkedClaim);
+        debunkModal.appendChild(misleadingClaimText);
+        debunkModal.appendChild(displayText);
         debunkModal.prepend(closeButton);
       } else {
-        debunkModal.innerHTML = `Misleading claim alert! <br/><br/>${
-          displayTextOptions[matched[position].toLowerCase()]
-        }`;
+        debunkedClaim.innerHTML = match.toUpperCase();
+        displayText.innerHTML = displayTextOptions[`${match.toLowerCase()}`];
+
+        debunkModal.appendChild(debunkedClaim);
+        debunkModal.appendChild(misleadingClaimText);
+        debunkModal.appendChild(displayText);
         debunkModal.prepend(closeButton);
-        debunkModal.appendChild(prevButton);
-        debunkModal.appendChild(nextButton);
+        debunkModal.appendChild(navButtonContainer);
       }
     }
+    // attach modal content to modal container
+    modalContainer.appendChild(debunkModal);
 
     function viewNext() {
       if (position >= matched.length - 1) {
