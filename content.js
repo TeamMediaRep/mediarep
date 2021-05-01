@@ -76,10 +76,6 @@ function addButtonElement() {
     buttonContainerNode.appendChild(newButton);
   }
 
-  // create the debunking modal
-  const debunkModal = document.createElement("div");
-  debunkModal.innerHTML = `Misleading claim alert! <br/><br/>${displayText}<br/>`;
-
   // add functionality to the button click
   newButton.onclick = function (e) {
     e.preventDefault();
@@ -94,63 +90,57 @@ function addButtonElement() {
     const debunkModal = document.createElement("div");
     debunkModal.className = "modal-content";
 
-    if (displayText === undefined) {
-      debunkModal.innerHTML = "No marketing claims";
-    } else {
-      debunkModal.innerHTML = `Misleading claim alert! <br/><br/>${displayText}<br/>`;
-    }
-
     // create exit button for modal
     const closeButton = document.createElement("span");
     closeButton.className = "close-button";
     closeButton.innerHTML = "&times;";
-    
-    // add exit button to modal
-    debunkModal.prepend(closeButton);
-    
+
     const nextButton = document.createElement("button");
     nextButton.className = "next-option";
     nextButton.innerHTML = "&#62";
-    
+
     const prevButton = document.createElement("button");
     prevButton.className = "prev-option";
     prevButton.innerHTML = "&#60";
-    
-    debunkModal.appendChild(prevButton);
-    debunkModal.appendChild(nextButton);
-    
+
     // attach modal content to modal container
     modalContainer.appendChild(debunkModal);
 
     let position = 0;
-    
-    function addNavOptions() {
-      debunkModal.innerHTML = `Misleading claim alert! <br/><br/>${displayTextOptions[matched[position].toLowerCase()]}`;
-      debunkModal.prepend(closeButton);
-      debunkModal.appendChild(prevButton);
-      debunkModal.appendChild(nextButton);
+
+    function buildOutModal() {
+      if (matched[0] === undefined) {
+        debunkModal.innerHTML = "No marketing claims";
+      } else {
+        debunkModal.innerHTML = `Misleading claim alert! <br/><br/>${
+          displayTextOptions[matched[position].toLowerCase()]
+        }`;
+        debunkModal.prepend(closeButton);
+        debunkModal.appendChild(prevButton);
+        debunkModal.appendChild(nextButton);
+      }
     }
 
     function viewNext() {
       if (position >= matched.length - 1) {
         position = 0;
-        addNavOptions();
+        buildOutModal();
         return;
       }
-      addNavOptions();
+      buildOutModal();
       position++;
     }
 
     function viewPrev() {
       if (position < 1) {
         position = matched.length - 1;
-        addNavOptions();
+        buildOutModal();
         return;
       }
-      addNavOptions();
+      buildOutModal();
       position--;
     }
-
+    buildOutModal();
     prevButton.addEventListener("click", viewPrev);
     nextButton.addEventListener("click", viewNext);
 
