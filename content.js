@@ -89,6 +89,10 @@ function addButtonElement() {
     prevButton.className = "prev-option";
     prevButton.innerHTML = "&#60";
 
+    const navButtonContainer = document.createElement("div");
+    navButtonContainer.appendChild(prevButton);
+    navButtonContainer.appendChild(nextButton);
+
     // create modal content box (the white div surrounding the content)
     const debunkModal = document.createElement("div");
     debunkModal.className = "modal-content";
@@ -127,6 +131,16 @@ function addButtonElement() {
 
         debunkModal.prepend(closeButton);
         debunkModal.appendChild(noClaimFoundMessage);
+      } else if (matched.length < 3) {
+        // temporarily set to 3 bc the last match of array never shows
+        // when bug is fixed, logic can be reset to (matched.length === 1)
+        debunkedClaim.innerHTML = match.toUpperCase();
+        displayText.innerHTML = displayTextOptions[`${match.toLowerCase()}`];
+
+        debunkModal.appendChild(debunkedClaim);
+        debunkModal.appendChild(misleadingClaimText);
+        debunkModal.appendChild(displayText);
+        debunkModal.prepend(closeButton);
       } else {
         debunkedClaim.innerHTML = match.toUpperCase();
         displayText.innerHTML = displayTextOptions[`${match.toLowerCase()}`];
@@ -135,8 +149,7 @@ function addButtonElement() {
         debunkModal.appendChild(misleadingClaimText);
         debunkModal.appendChild(displayText);
         debunkModal.prepend(closeButton);
-        debunkModal.appendChild(prevButton);
-        debunkModal.appendChild(nextButton);
+        debunkModal.appendChild(navButtonContainer);
       }
     }
     // attach modal content to modal container
