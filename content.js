@@ -76,14 +76,6 @@ function addButtonElement() {
     const modalContainer = document.createElement("div");
     modalContainer.className = "modal";
 
-    //add icon for text box
-    const alertIcon = document.createElement("img");
-    const source = chrome.runtime.getURL("images/alert_orange.png");
-    alertIcon.src = source;
-    const iconDiv = document.createElement("div");
-    iconDiv.classList.add("alert-icon");
-    iconDiv.appendChild(alertIcon);
-
     // create exit button for modal
     const closeButton = document.createElement("span");
     closeButton.className = "close-button";
@@ -97,33 +89,48 @@ function addButtonElement() {
     prevButton.className = "prev-option";
     prevButton.innerHTML = "&#60";
 
-    // attach modal content to modal container
-    // modalContainer.appendChild(debunkModal);
-
-    // create modal content
+    // create modal content box (the white div surrounding the content)
     const debunkModal = document.createElement("div");
     debunkModal.className = "modal-content";
+
+    // //Claim text (ie. 'Gluten free', or 'sugar free')
+    const debunkedClaim = document.createElement("div");
+    debunkedClaim.classList.add("debunked-claim-title");
+
+    // // text describing in more detail why it is misleading
+    const displayText = document.createElement("div");
+
+    // //create alert icon
+    const alertIcon = document.createElement("img");
+    const source = chrome.runtime.getURL("images/alert_orange.png");
+    alertIcon.src = source;
+    const iconDiv = document.createElement("div");
+    iconDiv.classList.add("alert-icon");
+    iconDiv.appendChild(alertIcon);
+
+    // //create div for misleading claim alert
     const misleadingClaimText = document.createElement("div");
     misleadingClaimText.innerHTML = "Misleading claim alert!";
-    misleadingClaimText.prepend(iconDiv);
     misleadingClaimText.classList.add("wrap");
     misleadingClaimText.classList.add("claim-text");
-
-    const debunkedClaim = document.createElement("div");
-    // debunkedClaim.innerHTML = matched[0];
-    debunkedClaim.classList.add("debunked-claim-title");
-    const displayText = document.createElement("div");
+    misleadingClaimText.prepend(iconDiv);
 
     let position = 0;
     function buildOutModal(position) {
       const match = matched[position];
 
       if (matched[0] === undefined) {
-        debunkModal.innerHTML = "No marketing claims";
+        const noClaimFoundMessage = document.createElement("div");
+        noClaimFoundMessage.classList.add("claim-text");
+        noClaimFoundMessage.classList.add("wrap");
+        noClaimFoundMessage.innerHTML = "No marketing claims";
+
         debunkModal.prepend(closeButton);
+        debunkModal.appendChild(noClaimFoundMessage);
       } else {
-        debunkModal.innerHTML = match.toUpperCase();
+        debunkedClaim.innerHTML = match.toUpperCase();
         displayText.innerHTML = displayTextOptions[`${match.toLowerCase()}`];
+
         debunkModal.appendChild(debunkedClaim);
         debunkModal.appendChild(misleadingClaimText);
         debunkModal.appendChild(displayText);
@@ -132,7 +139,7 @@ function addButtonElement() {
         debunkModal.appendChild(nextButton);
       }
     }
-    // temporarily moving this here:
+    // attach modal content to modal container
     modalContainer.appendChild(debunkModal);
 
     function viewNext() {
